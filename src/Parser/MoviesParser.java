@@ -22,10 +22,11 @@ class MoviesParser extends Parser {
         String title = partBetween(line, "\"");
         String firstYear = partBetween(line, "(", ")");
         String seriesInfo = partBetween(line, "{", "}");
-        if (Objects.equals(seriesInfo, "")) {
-            seriesInfo = "not a series";
-        }
+
+        String seriesTitle = allButLastWord(seriesInfo);
+        String seriesNumber = partBetween(seriesInfo, "(", ")");
+
         String secondYear = lastWord(line);
-        return String.format("%s, %s, %s, %s", title, firstYear, seriesInfo, secondYear);
+        return String.format("%s, %s, %s, %s, %s", title, firstYear, seriesTitle, seriesNumber, secondYear);
     }
 }

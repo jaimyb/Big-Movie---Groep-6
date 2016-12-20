@@ -35,13 +35,23 @@ abstract class Parser {
         return partBetween(line, selector, selector);
     }
 
-    String lastWord(String line) {
-        int     lastTab = line.indexOf("\t"),
-                lastSpace = line.indexOf(" ");
+    String allButLastWord(String line) {
+        int index = getLastSpaceIndex(line);
 
-        int index = ((lastTab > lastSpace) ? lastTab : lastSpace) + 1;
+        return line.substring(0, index).trim();
+    }
+
+    String lastWord(String line) {
+        int index = getLastSpaceIndex(line);
 
         return line.substring(index).trim();
+    }
+
+    private int getLastSpaceIndex(String line) {
+        int     lastTab = line.lastIndexOf("\t"),
+                lastSpace = line.lastIndexOf(" ");
+
+        return ((lastTab > lastSpace) ? lastTab : lastSpace) + 1;
     }
 
     PrintWriter createPrintWriter(String filename) {
