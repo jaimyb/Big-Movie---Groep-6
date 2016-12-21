@@ -1,7 +1,5 @@
 package Parser;
 
-import sun.nio.cs.UTF_32;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -15,8 +13,8 @@ import java.util.stream.Stream;
  * Created by jorn on 12/19/16.
  */
 abstract class Parser {
-    protected PrintWriter pw = new PrintWriter(System.out);
-    protected String filename;
+    PrintWriter pw = new PrintWriter(System.out);
+    String filename;
 
     void parseFile() {
         readFile("input/" + filename + ".list").forEach(this::process);
@@ -67,7 +65,7 @@ abstract class Parser {
         return createPrintWriter("output/" + filename + ".csv");
     }
 
-    PrintWriter createPrintWriter(String filename) {
+    private PrintWriter createPrintWriter(String filename) {
         File file = new File("./" + filename);
 
         PrintWriter pw = null;
@@ -81,7 +79,7 @@ abstract class Parser {
         return pw;
     }
 
-    Stream<String> readFile(final String path) {
+    private Stream<String> readFile(final String path) {
         try {
             return Files.lines(Paths.get(path), Charset.availableCharsets().get("iso-8859-1"));
         } catch (IOException e) {
