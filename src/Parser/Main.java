@@ -7,6 +7,7 @@ import java.nio.charset.Charset;
  */
 public class Main {
     public static void main(String[] args) {
-        MoviesParser.getInstance().parseFile();
+//        MoviesParser.getInstance().parseFile();
+        ActorParser.getInstance().parseFile();
     }
 }
