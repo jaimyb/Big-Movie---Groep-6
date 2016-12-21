@@ -15,6 +15,14 @@ import java.util.stream.Stream;
  * Created by jorn on 12/19/16.
  */
 abstract class Parser {
+    protected PrintWriter pw = new PrintWriter(System.out);
+
+    void parseFile() {
+        readFile("input/movies.list").forEach(this::process);
+    }
+
+    abstract void process(String line);
+
     String partBetween(String line, String firstSelector, String secondSelector) {
         int startIndex = line.indexOf(firstSelector);
 

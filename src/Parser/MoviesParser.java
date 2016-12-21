@@ -11,12 +11,8 @@ class MoviesParser extends Parser {
         return instance;
     }
 
-    void parseFile() {
-        readFile("input/movies.list").map(this::process).forEach(System.out::println);
-    }
-
-    private String process(String line) {
-        if(line.length() == 0 || line.charAt(0) != '"') return "";
+    void process(String line) {
+        if(line.length() == 0 || line.charAt(0) != '"') pw.println("");
         String title = partBetween(line, "\"");
         String firstYear = partBetween(line, "(", ")");
         String seriesInfo = partBetween(line, "{", "}");
@@ -25,6 +21,6 @@ class MoviesParser extends Parser {
         String seriesNumber = partBetween(seriesInfo, "(", ")");
 
         String secondYear = lastWord(line);
-        return String.format("%s, %s, %s, %s, %s", title, firstYear, seriesTitle, seriesNumber, secondYear);
+        pw.println(String.format("%s, %s, %s, %s, %s", title, firstYear, seriesTitle, seriesNumber, secondYear));
     }
 }
