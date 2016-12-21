@@ -16,9 +16,10 @@ import java.util.stream.Stream;
  */
 abstract class Parser {
     protected PrintWriter pw = new PrintWriter(System.out);
+    protected String filename;
 
     void parseFile() {
-        readFile("input/movies.list").forEach(this::process);
+        readFile("input/" + filename + ".list").forEach(this::process);
     }
 
     abstract void process(String line);
@@ -60,6 +61,10 @@ abstract class Parser {
                 lastSpace = line.lastIndexOf(" ");
 
         return ((lastTab > lastSpace) ? lastTab : lastSpace) + 1;
+    }
+
+    PrintWriter createPrintWriter() {
+        return createPrintWriter("output/" + filename + ".csv");
     }
 
     PrintWriter createPrintWriter(String filename) {
