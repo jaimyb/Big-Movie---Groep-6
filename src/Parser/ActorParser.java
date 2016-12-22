@@ -5,7 +5,6 @@ package Parser;
  */
 public class ActorParser extends BaseActorParser {
     private static ActorParser instance;
-    private boolean started = false;
 
     static ActorParser getInstance() {
         if (instance == null) instance = new ActorParser();

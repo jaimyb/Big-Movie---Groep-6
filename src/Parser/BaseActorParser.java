@@ -18,18 +18,28 @@ abstract class BaseActorParser extends Parser {
                 return;
             }
 
+            if(line.length() == 0) {
+                finishActor();
+                return;
+            }
+
 
             if(newActor) {
                 createNewActor(line);
             }
+
+
+            String[] splitTabs = line.split("\t");
+
             // Parse movies
+            String movieInfo = MoviesParser.getInstance().parseMovieString(splitTabs[splitTabs.length - 1]);
 
-            // TODO add movie info
-            pw.println(actorInfo);
-
-            if(line.length() == 0) {
-                finishActor();
+            // Can't be parsed
+            if(movieInfo.equals("")) {
+                return;
             }
+
+            writeToStream(actorInfo + movieInfo);
         }
         else if(line.equals("----\t\t\t------")) {
             started = true;
@@ -61,7 +71,7 @@ abstract class BaseActorParser extends Parser {
         }
 
 
-        actorInfo = String.format("%s, %s, %s, ", idNumber, firstName, lastName);
+        actorInfo = formatAsCSV(idNumber, firstName, lastName);
 
 //        currentLine = fullName;
         newActor = false;

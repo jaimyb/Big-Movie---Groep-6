@@ -7,7 +7,13 @@ import java.nio.charset.Charset;
  */
 public class Main {
     public static void main(String[] args) {
-//        MoviesParser.getInstance().parseFile();
+        long tStart = System.currentTimeMillis();
+
+        MoviesParser.getInstance().parseFile();
         ActorParser.getInstance().parseFile();
+        ActressParser.getInstance().parseFile();
+
+
+        System.out.println("Finished parsing files. Time elapsed: " + (System.currentTimeMillis() - tStart));
     }
 }

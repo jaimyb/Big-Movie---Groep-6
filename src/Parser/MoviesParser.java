@@ -26,56 +26,66 @@ class MoviesParser extends Parser {
 
         if(started)
         {
-            int firstBrace = line.indexOf('(');
-
-            // Not a correct line
-            if(firstBrace == -1) {
+            String s = parseMovieString(line);
+            if(s.equals("")) {
                 return;
-            }
-
-            String title = partBefore(line, "(").trim().replace("\"", "");
-
-            // Not a correct line
-            if(title.equals("")) {
-                return;
-            }
-
-            String firstYear = partBetween(line, "(", ")");
-            String seriesInfo = partBetween(line, "{", "}");
-
-            String seriesTitle = allButLastWord(seriesInfo);
-            String seriesNumber = partBetween(seriesInfo, "(", ")");
-
-            String seriesSeason = "";
-            String seriesEpisode = "";
-
-            // Not a movie
-            if(!seriesNumber.equals(""))
-            {
-                // Not a series
-                if(seriesNumber.charAt(0) != '#') {
-                    return;
-                }
-
-                int hashTagIndex = seriesNumber.indexOf('#');
-                int dotIndex = seriesNumber.indexOf('.');
-
-                if(dotIndex == -1) {
-                    seriesSeason = seriesNumber.substring(hashTagIndex + 1);
-                }
-                else {
-                    seriesSeason = seriesNumber.substring(hashTagIndex + 1, dotIndex);
-                    seriesEpisode = seriesNumber.substring(dotIndex + 1);
-                }
-
             }
 
             String secondYear = lastWord(line).trim();
-            pw.println(String.format("%s, %s, %s, %s, %s, %s", title, firstYear, seriesTitle, seriesSeason, seriesEpisode, secondYear));
+            String result = s + formatAsCSV(secondYear);
+            writeToStream(result);
 
         }
         else if(line.equals("===========")) {
             started = true;
         }
+    }
+
+    String parseMovieString(String line) {
+        int firstBrace = line.indexOf('(');
+
+        // Not a correct line
+        if(firstBrace == -1) {
+            return "";
+        }
+
+        String title = partBefore(line, "(").trim().replace("\"", "");
+
+        // Not a correct line
+        if(title.equals("")) {
+            return "";
+        }
+
+        String firstYear = partBetween(line, "(", ")");
+        String seriesInfo = partBetween(line, "{", "}");
+
+        String seriesTitle = allButLastWord(seriesInfo);
+        String seriesNumber = partBetween(seriesInfo, "(", ")");
+
+        String seriesSeason = "";
+        String seriesEpisode = "";
+
+        // Not a movie
+        if(!seriesNumber.equals(""))
+        {
+            // Not a series
+            if(seriesNumber.charAt(0) != '#') {
+                return "";
+            }
+
+            int hashTagIndex = seriesNumber.indexOf('#');
+            int dotIndex = seriesNumber.indexOf('.');
+
+            if(dotIndex == -1) {
+                seriesSeason = seriesNumber.substring(hashTagIndex + 1);
+            }
+            else {
+                seriesSeason = seriesNumber.substring(hashTagIndex + 1, dotIndex);
+                seriesEpisode = seriesNumber.substring(dotIndex + 1);
+            }
+
+        }
+
+        return formatAsCSV(title, firstYear, seriesTitle, seriesSeason, seriesEpisode);
     }
 }

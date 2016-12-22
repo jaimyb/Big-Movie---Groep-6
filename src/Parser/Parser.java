@@ -1,9 +1,6 @@
 package Parser;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -17,10 +14,27 @@ abstract class Parser {
     String filename;
 
     void parseFile() {
+        System.out.println("Parsing file " + filename);
         readFile("input/" + filename + ".list").forEach(this::process);
+        System.out.println("Closing print writer");
+        pw.close();
+        System.out.println("Finished file " + filename);
     }
 
     abstract void process(String line);
+
+    String formatAsCSV(String... values) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String value : values) {
+            stringBuilder.append(value).append(',');
+        }
+        return stringBuilder.toString();
+    }
+
+    void writeToStream(String s){
+        // Print to stream, remove last comma
+        pw.println(s.substring(0, s.length() - 1));
+    }
 
     String partBefore(String line, String selector) {
         int index = line.indexOf(selector);
@@ -80,7 +94,8 @@ abstract class Parser {
         PrintWriter pw = null;
 
         try {
-            pw = new PrintWriter(file);
+            FileOutputStream stream = new FileOutputStream(file);
+            pw = new PrintWriter(stream, true);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
