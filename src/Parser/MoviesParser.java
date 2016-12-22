@@ -33,7 +33,12 @@ class MoviesParser extends Parser {
                 return;
             }
 
-            String title = line.substring(0, firstBrace).trim().replace("\"", "");
+            String title = partBefore(line, "(").trim().replace("\"", "");
+
+            // Not a correct line
+            if(title.equals("")) {
+                return;
+            }
 
             String firstYear = partBetween(line, "(", ")");
             String seriesInfo = partBetween(line, "{", "}");

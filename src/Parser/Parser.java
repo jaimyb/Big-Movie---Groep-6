@@ -22,6 +22,15 @@ abstract class Parser {
 
     abstract void process(String line);
 
+    String partBefore(String line, String selector) {
+        int index = line.indexOf(selector);
+        if(index == -1) {
+            return "";
+        }
+
+        return line.substring(0, index);
+    }
+
     String partBetween(String line, String firstSelector, String secondSelector) {
         int startIndex = line.indexOf(firstSelector);
 

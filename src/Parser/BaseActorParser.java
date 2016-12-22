@@ -6,16 +6,26 @@ package Parser;
 abstract class BaseActorParser extends Parser {
     private boolean started = false,
                     newActor = true;
-    private String currentLine = "";
+    private String actorInfo = "";
 
     @Override
     void process(String line) {
         if(started)
         {
+            // Check for end of list
+            if(line.equals("-----------------------------------------------------------------------------")) {
+                started = false;
+                return;
+            }
+
+
             if(newActor) {
                 createNewActor(line);
             }
             // Parse movies
+
+            // TODO add movie info
+            pw.println(actorInfo);
 
             if(line.length() == 0) {
                 finishActor();
@@ -29,14 +39,31 @@ abstract class BaseActorParser extends Parser {
     }
 
     private void finishActor() {
-        pw.println(currentLine);
         newActor = true;
     }
 
     private void createNewActor(String line) {
         String fullName = line.split("\t")[0];
-        System.out.println(fullName);
-        currentLine = fullName;
+
+        String[] nameComponents = fullName.split(", ");
+        String firstName = nameComponents[0];
+
+        String lastName = "",
+                idNumber = "";
+        if(nameComponents.length > 1) {
+            if(!nameComponents[1].contains("(")) {
+                lastName = nameComponents[1];
+            }
+            else {
+                lastName = partBefore(nameComponents[1], "(").trim();
+                idNumber = partBetween(nameComponents[1], "(", ")");
+            }
+        }
+
+
+        actorInfo = String.format("%s, %s, %s, ", idNumber, firstName, lastName);
+
+//        currentLine = fullName;
         newActor = false;
     }
 }
