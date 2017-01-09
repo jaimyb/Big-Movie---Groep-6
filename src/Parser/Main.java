@@ -13,6 +13,7 @@ public class Main {
 //        ActorParser.getInstance().parseFile();
 //        ActressParser.getInstance().parseFile();
         GenreParser.getInstance().parseFile();
+//        LocationParser.getInstance().parseFile();
 
         System.out.println("Finished parsing files. Time elapsed: " + (System.currentTimeMillis() - tStart) / 1000);
     }

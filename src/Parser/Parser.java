@@ -36,6 +36,10 @@ abstract class Parser {
         pw.println(s.substring(0, s.length() - 1));
     }
 
+    String wrapInQuotes(String s) {
+        return String.format("\"%s\"", s);
+    }
+
     String partBefore(String line, String selector) {
         int index = line.indexOf(selector);
         if(index == -1) {
