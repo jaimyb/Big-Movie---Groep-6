@@ -9,11 +9,11 @@ public class Main {
     public static void main(String[] args) {
         long tStart = System.currentTimeMillis();
 
-        MoviesParser.getInstance().parseFile();
-        ActorParser.getInstance().parseFile();
-        ActressParser.getInstance().parseFile();
+//        MoviesParser.getInstance().parseFile();
+//        ActorParser.getInstance().parseFile();
+//        ActressParser.getInstance().parseFile();
+        GenreParser.getInstance().parseFile();
 
-
-        System.out.println("Finished parsing files. Time elapsed: " + (System.currentTimeMillis() - tStart));
+        System.out.println("Finished parsing files. Time elapsed: " + (System.currentTimeMillis() - tStart) / 1000);
     }
 }
