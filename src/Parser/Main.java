@@ -15,7 +15,8 @@ public class Main {
 //        GenreParser.getInstance().parseFile();
 //        LocationParser.getInstance().parseFile();
 //        CountryParser.getInstance().parseFile();
-        RatingParser.getInstance().parseFile();
+//        RatingParser.getInstance().parseFile();
+        MPAAParser.getInstance().parseFile();
 
         System.out.println("Finished parsing files. Time elapsed: " + (System.currentTimeMillis() - tStart) / 1000);
     }
