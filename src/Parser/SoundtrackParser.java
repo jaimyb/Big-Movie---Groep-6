@@ -6,22 +6,52 @@
 package Parser;
 
 /**
- *
  * @author JaimyBeima
  */
-public class SoundtrackParser extends BaseSoundtrackParser
-{
+class SoundtrackParser extends Parser {
     private static SoundtrackParser instance;
-    
-    static SoundtrackParser getInstance()
-    {
+
+    static SoundtrackParser getInstance() {
         if (instance == null) instance = new SoundtrackParser();
         return instance;
     }
-    
+
     private SoundtrackParser() {
         filename = "soundtracks";
         pw = createPrintWriter();
     }
-    
+
+    //Variables
+    private String movieParsed;
+    private String song;
+
+
+    @Override
+    void process(String line) {
+        if (line != null) {
+            if (line.equals("")) return;
+
+            if ("#".equals(line.substring(0, 1)) && line.length() > 0) {
+                String movie = line.substring(2);
+                movieParsed = MoviesParser.getInstance().parseMovieString(movie);
+            } else if ("-".equals(line.substring(0, 1)) && line.length() > 0 &&
+                    !line.equals("-----------------------------------------------------------------------------") &&
+                    line.contains("\"") &&
+                    !movieParsed.equals("")) {
+                newSong(line);
+                if(song.equals("")) {
+                    return;
+                }
+                writeToStream(movieParsed + formatAsCSV(song));
+            }
+        }
+    }
+
+
+    private void newSong(String line) {
+        String songTitle = partBetween(line, "\"");
+
+        song = songTitle;
+    }
+
 }
