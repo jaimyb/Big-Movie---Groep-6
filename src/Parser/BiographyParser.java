@@ -32,7 +32,7 @@ public class BiographyParser extends Parser {
                 String birthInfo = line.substring(4);
 
 
-                System.out.println(formatAsCSV(actorInfo, birthInfo));
+                System.out.println(formatAsCSV(actorInfo, wrapInQuotes(birthInfo)));
             }
         }
         else if(line.equals("==============")) {
