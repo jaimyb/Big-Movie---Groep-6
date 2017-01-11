@@ -29,20 +29,20 @@ public abstract class BaseSoundtrackParser extends Parser
                 movieParsed = MoviesParser.getInstance().parseMovieString(movie);
             }
                   
-            if("-".equals(line.substring(0,1)) && line.length() >  0 && !line.equals("-----------------------------------------------------------------------------") && line.contains("\""))
+            else if("-".equals(line.substring(0,1)) && line.length() >  0 &&
+                    !line.equals("-----------------------------------------------------------------------------") &&
+                    line.contains("\"") &&
+                    !movieParsed.equals(""))
             {
                 newSong(line);
+                writeToStream(movieParsed + songParsed);
             }
-             
-            writeToStream(movieParsed + songParsed);
         }
     }
         
     
-    void newSong(String line)
+    private void newSong(String line)
     {
-        System.out.println(line);
-//        String songTitle = line.substring(line.indexOf('"')+1,line.lastIndexOf('"'));
         String songTitle = partBetween(line, "\"");
         
         songParsed = formatAsCSV(songTitle);
