@@ -15,7 +15,8 @@ public class Main {
         LocationParser.getInstance(),
         CountryParser.getInstance(),
         RatingParser.getInstance(),
-        MPAAParser.getInstance()
+        MPAAParser.getInstance(),
+        SoundtrackParser.getInstance()
     };
 
     public static void main(String[] args) {
