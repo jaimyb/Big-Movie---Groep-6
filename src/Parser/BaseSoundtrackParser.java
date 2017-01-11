@@ -12,36 +12,37 @@ package Parser;
 public abstract class BaseSoundtrackParser extends Parser
 {
     //Variables
-    private boolean started;
     private String movieParsed;
     private String songParsed;
     
     
     @Override
     void process(String line)
-    {
-        if(started && line != null)
+    { 
+        if(line != null)
         {   
-            if(line.charAt(0) == '#' && line.length() > 0)
+            if(line.equals("")) return;
+            
+            if("#".equals(line.substring(0,1)) && line.length() > 0)
             {
                 String movie = line.substring(2);
                 movieParsed = MoviesParser.getInstance().parseMovieString(movie);
             }
                   
-            if(line.charAt(0) == '-' && line.length() >  0 && !line.equals("-----------------------------------------------------------------------------"))
+            if("-".equals(line.substring(0,1)) && line.length() >  0 && !line.equals("-----------------------------------------------------------------------------") && line.contains("\""))
             {
                 newSong(line);
             }
-            
+             
             writeToStream(movieParsed + songParsed);
         }
     }
         
     
-    
     void newSong(String line)
     {
-        String songTitle = line.substring(line.indexOf('"')+1,line.lastIndexOf('"'));
+        String songTitle = line.substring(line.indexOf('"')+1,line.lastIndexOf('"')); 
+
         
         songParsed = formatAsCSV(songTitle);
     }
