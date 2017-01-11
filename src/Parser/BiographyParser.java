@@ -7,9 +7,9 @@ import java.util.Objects;
  */
 public class BiographyParser extends Parser {
     private static BiographyParser instance;
-    private boolean started = false,
-            newActor = true;
+    private boolean started = false;
     private String actorInfo = "";
+    private StringBuilder reason;
 
     static BiographyParser getInstance() {
         if(instance == null) instance = new BiographyParser();
@@ -24,27 +24,27 @@ public class BiographyParser extends Parser {
     @Override
     void process(String line) {
         if(started) {
-            if(line.equals("")) return;
+            if(line.equals("") || line.length() < 2) return;
 
-            if(line.equals("-------------------------------------------------------------------------------") && newActor) {
-                System.out.println("started actor");
-                newActor = false;
-                return;
+            if(Objects.equals(line.substring(0, 2), "RN")) {
+                actorInfo = line.substring(4);
+                //System.out.println(actorInfo);
+                reason = new StringBuilder();
             }
-
-            if (!newActor) createNewActor(line);
-
-            if(line.equals("-------------------------------------------------------------------------------") && !newActor) {
-                System.out.println("ended actor");
-                newActor = true;
-                return;
+            else if (Objects.equals(line.substring(0, 2), "DB") && actorInfo != "") {
+                reason.append(line.substring(4));
             }
-
-        } else if(line.equals("==============")) {
+            else if(reason != null){
+                System.out.println(actorInfo + " " + reason.toString());
+                //writeToStream(actorInfo + formatAsCSV(reason.toString()));
+                reason = null;
+            }
+        }
+        else if(line.equals("==============")) {
             started = true;
         }
     }
-
+    /*
     private void createNewActor(String line) {
 
         if (Objects.equals(line.substring(0, 2), "RN")) {
@@ -56,5 +56,5 @@ public class BiographyParser extends Parser {
         }
 
     }
-
+    */
 }
