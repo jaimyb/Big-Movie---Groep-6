@@ -17,7 +17,7 @@ public class Main {
 //        RatingParser.getInstance(),
 //        MPAAParser.getInstance()
 //            SoundtrackParser.getInstance(),
-//            BiographyParser.getInstance()
+            BiographyParser.getInstance()
     };
 
     public static void main(String[] args) {

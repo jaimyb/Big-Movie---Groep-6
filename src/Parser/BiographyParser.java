@@ -32,24 +32,11 @@ public class BiographyParser extends Parser {
                 String birthInfo = line.substring(4);
 
 
-                System.out.println(formatAsCSV(actorInfo, wrapInQuotes(birthInfo)));
+                writeToStream(formatAsCSV(actorInfo, wrapInQuotes(birthInfo)));
             }
         }
         else if(line.equals("==============")) {
             started = true;
         }
     }
-    /*
-    private void createNewActor(String line) {
-
-        if (Objects.equals(line.substring(0, 2), "RN")) {
-            System.out.println(line.substring(4));
-        }
-
-        if (Objects.equals(line.substring(0, 2), "DB")) {
-            System.out.println(line.substring(4));
-        }
-
-    }
-    */
 }
