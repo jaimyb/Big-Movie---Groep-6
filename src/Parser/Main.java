@@ -8,15 +8,15 @@ import java.nio.charset.Charset;
 public class Main {
 
     private static Parser[] parsers = new Parser[] {
-            MoviesParser.getInstance(),
-        ActorParser.getInstance(),
-        ActressParser.getInstance(),
-        GenreParser.getInstance(),
-        LocationParser.getInstance(),
-        CountryParser.getInstance(),
-        RatingParser.getInstance(),
-        MPAAParser.getInstance(),
-        SoundtrackParser.getInstance()
+//            MoviesParser.getInstance(),
+//        ActorParser.getInstance(),
+//        ActressParser.getInstance(),
+//        GenreParser.getInstance(),
+//        LocationParser.getInstance(),
+//        CountryParser.getInstance(),
+//        RatingParser.getInstance(),
+//        MPAAParser.getInstance()
+            SoundtrackParser.getInstance()
     };
 
     public static void main(String[] args) {
