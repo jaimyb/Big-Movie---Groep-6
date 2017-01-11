@@ -41,8 +41,9 @@ public abstract class BaseSoundtrackParser extends Parser
     
     void newSong(String line)
     {
-        String songTitle = line.substring(line.indexOf('"')+1,line.lastIndexOf('"')); 
-
+        System.out.println(line);
+//        String songTitle = line.substring(line.indexOf('"')+1,line.lastIndexOf('"'));
+        String songTitle = partBetween(line, "\"");
         
         songParsed = formatAsCSV(songTitle);
     }
