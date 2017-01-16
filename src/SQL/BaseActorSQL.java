@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 /**
  * Created by Valesco on 1/16/2017.
  */
-abstract class SQL {
+abstract class BaseActorSQL {
 
     String filename;
     String line = "";
@@ -16,7 +16,7 @@ abstract class SQL {
 
     void parseFile() {
         System.out.println("Parsing file " + filename);
-        readFile("input/" + filename + ".csv");
+        readFile("output/" + filename + ".csv");
         System.out.println("Closing print writer");
         System.out.println("Finished file " + filename);
     }
@@ -26,7 +26,7 @@ abstract class SQL {
             br = new BufferedReader(new FileReader(path));
             while ((line = br.readLine()) != null) {
                 String[] str_line = line.split(",");
-                System.out.println("test "+str_line[0]);
+                System.out.println(str_line[2]+" "+str_line[1]+" "+str_line[3]);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
