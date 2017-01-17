@@ -30,7 +30,7 @@ public class MPAAParser extends Parser {
                 reason.append(line.substring(4));
             }
             else if(reason != null){
-                writeToStream(movieInfo + formatAsCSV(reason.toString()));
+                writeToStream(movieInfo + formatAsCSV(wrapInQuotes(reason.toString())));
                 reason = null;
             }
         }

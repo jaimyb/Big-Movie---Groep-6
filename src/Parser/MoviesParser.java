@@ -86,6 +86,6 @@ class MoviesParser extends Parser {
 
         }
 
-        return formatAsCSV(title, firstYear, seriesTitle, seriesSeason, seriesEpisode);
+        return formatAsCSV(wrapInQuotes(title), firstYear, wrapInQuotes(seriesTitle), seriesSeason, seriesEpisode);
     }
 }
