@@ -17,6 +17,7 @@ class MoviesParser extends Parser {
     private MoviesParser() {
         filename = "movies";
         pw = createPrintWriter();
+        pw.println("title,firstYear,seriesTitle,seriesSeason,seriesEpisode,secondYear");
     }
 
     void process(String line) {

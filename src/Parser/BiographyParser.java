@@ -18,6 +18,7 @@ public class BiographyParser extends Parser {
     private BiographyParser() {
         filename = "biographies";
         pw = createPrintWriter();
+        pw.println("actorInfo,birthInfo");
     }
 
     @Override
@@ -33,6 +34,7 @@ public class BiographyParser extends Parser {
 
 
                 writeToStream(formatAsCSV(actorInfo, wrapInQuotes(birthInfo)));
+                actorInfo = "";
             }
         }
         else if(line.equals("==============")) {

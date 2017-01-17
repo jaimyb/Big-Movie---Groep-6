@@ -15,6 +15,7 @@ public class LocationParser extends Parser {
     private LocationParser() {
         filename = "locations";
         pw = createPrintWriter();
+        pw.println("title,firstYear,seriesTitle,seriesSeason,seriesEpisode,location,specification");
     }
 
     @Override
@@ -45,7 +46,7 @@ public class LocationParser extends Parser {
                 specification = "";
             }
 
-            writeToStream(movieInfo + formatAsCSV(location, specification));
+            writeToStream(movieInfo + formatAsCSV(location, specification.equals("") ? "" : specification.substring(1, specification.length() - 1)));
 
         } else if(line.equals("==============")) {
             started = true;

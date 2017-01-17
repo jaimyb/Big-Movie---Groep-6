@@ -19,6 +19,7 @@ class SoundtrackParser extends Parser {
     private SoundtrackParser() {
         filename = "soundtracks";
         pw = createPrintWriter();
+        pw.println("title,firstYear,seriesTitle,seriesSeason,seriesEpisode,song");
     }
 
     //Variables

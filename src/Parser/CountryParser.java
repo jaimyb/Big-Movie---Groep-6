@@ -15,6 +15,8 @@ public class CountryParser extends Parser {
     private CountryParser() {
         filename = "countries";
         pw = createPrintWriter();
+        pw.println("title,firstYear,seriesTitle,seriesSeason,seriesEpisode,country");
+
     }
 
     @Override

@@ -16,6 +16,7 @@ public class GenreParser extends Parser {
     private GenreParser() {
         filename = "genres";
         pw = createPrintWriter();
+        pw.println("title,firstYear,seriesTitle,seriesSeason,seriesEpisode,genre");
     }
 
     @Override

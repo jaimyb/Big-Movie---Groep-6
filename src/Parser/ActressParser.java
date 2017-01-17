@@ -14,5 +14,6 @@ public class ActressParser extends BaseActorParser {
     private ActressParser() {
         filename = "actresses";
         pw = createPrintWriter();
+        pw.println("idNumber,firstName,lastName,title,firstYear,seriesTitle,seriesSeason,seriesEpisode");
     }
 }

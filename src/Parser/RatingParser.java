@@ -18,6 +18,7 @@ public class RatingParser extends Parser {
     private RatingParser() {
         filename = "ratings";
         pw = createPrintWriter();
+        pw.println("title,firstYear,seriesTitle,seriesSeason,seriesEpisode,distribution,votes,rating");
     }
 
     @Override

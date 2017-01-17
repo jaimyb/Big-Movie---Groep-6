@@ -30,7 +30,17 @@ public class MPAAParser extends Parser {
                 reason.append(line.substring(4));
             }
             else if(reason != null){
-                writeToStream(movieInfo + formatAsCSV(wrapInQuotes(reason.toString())));
+                String[] splitFor = reason.toString().split(" for ");
+                if(splitFor.length != 2) return;
+                String rating;
+                if(splitFor[0].contains("Rated ")) {
+                    rating = splitFor[0].substring(6);
+                }
+                else {
+                    rating = splitFor[0];
+                }
+                String description = splitFor[1].substring(0, splitFor[1].length() - 1);
+                writeToStream(movieInfo + formatAsCSV(rating, wrapInQuotes(description)));
                 reason = null;
             }
         }
