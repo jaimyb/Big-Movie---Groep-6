@@ -45,7 +45,7 @@ class MoviesParser extends Parser {
     }
 
     String parseMovieString(String line) {
-        Matcher matcher = Pattern.compile("(.*?) \\((\\d{4})\\) (?:\\{(.*)})?").matcher(line);
+        Matcher matcher = Pattern.compile("(.*?) \\((\\d{4})\\)(?: \\{(.*)})?").matcher(line);
 
 //        String title = partBefore(line, "(").trim().replace("\"", "");
 //
