@@ -14,11 +14,11 @@ abstract class Parser {
     String filename;
 
     void parseFile() {
+        long tStart = System.currentTimeMillis();
         System.out.println("Parsing file " + filename);
         readFile("input/" + filename + ".list").forEach(this::process);
-        System.out.println("Closing print writer");
         pw.close();
-        System.out.println("Finished file " + filename);
+        System.out.println("Finished file " + filename + " in " + (System.currentTimeMillis() - tStart) / 1000 + "s");
     }
 
     abstract void process(String line);
@@ -34,6 +34,10 @@ abstract class Parser {
     void writeToStream(String s){
         // Print to stream, remove last comma
         pw.println(s.substring(0, s.length() - 1));
+    }
+
+    String escapeQuotes(String s) {
+        return s.replaceAll("\"", "\"\"");
     }
 
     String wrapInQuotes(String s) {

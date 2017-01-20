@@ -43,7 +43,7 @@ class SoundtrackParser extends Parser {
                 if(song.equals("")) {
                     return;
                 }
-                writeToStream(movieParsed + formatAsCSV(song));
+                writeToStream(movieParsed + formatAsCSV(wrapInQuotes(song)));
             }
         }
     }

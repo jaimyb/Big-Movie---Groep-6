@@ -39,14 +39,15 @@ public class LocationParser extends Parser {
             // last element is specification
             if(lastElement.charAt(0) == '(' && lastElement.charAt(lastElement.length() - 1) == ')') {
                 location = wrapInQuotes(splitTabs[splitTabs.length - 2]);
-                specification = lastElement;
+
+                specification = wrapInQuotes(escapeQuotes(lastElement.substring(1, lastElement.length() - 1)));
             }
             else {
                 location = wrapInQuotes(lastElement);
                 specification = "";
             }
 
-            writeToStream(movieInfo + formatAsCSV(location, specification.equals("") ? "" : specification.substring(1, specification.length() - 1)));
+            writeToStream(movieInfo + formatAsCSV(location, specification));
 
         } else if(line.equals("==============")) {
             started = true;

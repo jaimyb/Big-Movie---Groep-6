@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
  */
 public class RatingParser extends Parser {
     private static RatingParser instance;
-    private boolean started = false;
+    private boolean started = false, movieListStart = false;
 
     static RatingParser getInstance() {
         if(instance == null) instance = new RatingParser();
@@ -37,11 +37,17 @@ public class RatingParser extends Parser {
 
             String[] splitSpaces = line.split("  ");
             String movieInfo = MoviesParser.getInstance().parseMovieString(splitSpaces[splitSpaces.length - 1]);
+            if(movieInfo.equals("")) {
+                return;
+            }
 
-            writeToStream(formatAsCSV(movieInfo, distribution, votes, rating));
 
-        } else if(line.equals("New  Distribution  Votes  Rank  Title")) {
+            writeToStream(movieInfo + formatAsCSV(distribution, votes, rating));
+
+        } else if(movieListStart && line.equals("New  Distribution  Votes  Rank  Title")) {
             started = true;
+        } else if(line.equals("MOVIE RATINGS REPORT")) {
+            movieListStart = true;
         }
     }
 }

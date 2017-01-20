@@ -6,7 +6,7 @@ package Parser;
 public class MPAAParser extends Parser {
     private static MPAAParser instance;
     private boolean started = false;
-    private String movieInfo;
+    private String movieInfo = "";
     private StringBuilder reason;
 
     static MPAAParser getInstance() {
@@ -17,6 +17,7 @@ public class MPAAParser extends Parser {
     private MPAAParser() {
         filename = "mpaa-ratings-reasons";
         pw = createPrintWriter();
+        pw.println("title,firstYear,seriesTitle,seriesSeason,seriesEpisode,rating,description");
     }
 
     @Override
@@ -29,7 +30,7 @@ public class MPAAParser extends Parser {
             else if (line.startsWith("RE: ")) {
                 reason.append(line.substring(4));
             }
-            else if(reason != null){
+            else if(!movieInfo.equals("") && reason != null){
                 String[] splitFor = reason.toString().split(" for ");
                 if(splitFor.length != 2) return;
                 String rating;
@@ -39,8 +40,13 @@ public class MPAAParser extends Parser {
                 else {
                     rating = splitFor[0];
                 }
+                rating = rating.replaceAll(" ", "");
+                if(rating.equals("PG - 13")) {
+                    System.out.println("wat");
+                }
                 String description = splitFor[1].substring(0, splitFor[1].length() - 1);
                 writeToStream(movieInfo + formatAsCSV(rating, wrapInQuotes(description)));
+                movieInfo = "";
                 reason = null;
             }
         }

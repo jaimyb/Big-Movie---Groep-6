@@ -33,7 +33,7 @@ public class BiographyParser extends Parser {
                 String birthInfo = line.substring(4);
 
 
-                writeToStream(formatAsCSV(actorInfo, wrapInQuotes(birthInfo)));
+                writeToStream(formatAsCSV(wrapInQuotes(escapeQuotes(actorInfo)), wrapInQuotes(escapeQuotes(birthInfo))));
                 actorInfo = "";
             }
         }

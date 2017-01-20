@@ -71,7 +71,7 @@ abstract class BaseActorParser extends Parser {
         }
 
 
-        actorInfo = formatAsCSV(idNumber, firstName, lastName);
+        actorInfo = formatAsCSV(idNumber, wrapInQuotes(escapeQuotes(firstName)), wrapInQuotes(escapeQuotes(lastName)));
 
 //        currentLine = fullName;
         newActor = false;
