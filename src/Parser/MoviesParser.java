@@ -45,7 +45,7 @@ class MoviesParser extends Parser {
     }
 
     String parseMovieString(String line) {
-        Matcher matcher = Pattern.compile("(.*?) \\((\\d{4})\\)(?: \\{(.*)})?").matcher(line);
+        Matcher matcher = Pattern.compile("(.*?) \\(([\\d?]{4})(?:[/I]+)?\\)(?: \\{(.*)})?").matcher(line);
 
 //        String title = partBefore(line, "(").trim().replace("\"", "");
 //
@@ -64,7 +64,7 @@ class MoviesParser extends Parser {
 
         String title = matcher.group(1);
         String firstYear = matcher.group(2);
-        if(firstYear.equals("")) {
+        if(firstYear.equals("") || firstYear.equals("????")) {
             return "";
         }
         String seriesInfo = matcher.group(3);

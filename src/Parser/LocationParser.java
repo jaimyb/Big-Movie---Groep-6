@@ -38,12 +38,12 @@ public class LocationParser extends Parser {
 
             // last element is specification
             if(lastElement.charAt(0) == '(' && lastElement.charAt(lastElement.length() - 1) == ')') {
-                location = wrapInQuotes(splitTabs[splitTabs.length - 2]);
+                location = wrapInQuotes(escapeQuotes(splitTabs[splitTabs.length - 2]));
 
                 specification = wrapInQuotes(escapeQuotes(lastElement.substring(1, lastElement.length() - 1)));
             }
             else {
-                location = wrapInQuotes(lastElement);
+                location = wrapInQuotes(escapeQuotes(lastElement));
                 specification = "";
             }
 
