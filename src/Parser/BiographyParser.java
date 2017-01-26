@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 public class BiographyParser extends Parser {
     private static BiographyParser instance;
     private boolean started = false;
-    private String actorInfo = "";
+    private String actorInfo;
 
     static BiographyParser getInstance() {
         if (instance == null) instance = new BiographyParser();
@@ -28,27 +28,38 @@ public class BiographyParser extends Parser {
         if (started) {
             if (line.length() < 2) return;
 
-            if (Objects.equals(line.substring(0, 2), "RN")) {
-                actorInfo = line.substring(4);
+            if (Objects.equals(line.substring(0, 2), "NM")) {
+                String name = line.substring(4);
+                String[] actorSplit = name.split(", ");
+                String lastName = actorSplit[0], firstName = "", idNumber = "";
+                if(actorSplit.length > 1) {
+                    if(actorSplit[1].contains("(")) {
+                        firstName = partBefore(actorSplit[1], "(").trim();
+                        idNumber = partBetween(actorSplit[1], "(", ")");
+                    }
+                    else {
+                        firstName = actorSplit[1];
+                    }
+                }
+                actorInfo = formatAsCSV(idNumber, wrapInQuotes(escapeQuotes(lastName)), wrapInQuotes(escapeQuotes(firstName)));
+                actorInfo = actorInfo.substring(0, actorInfo.length() - 1);
+
             } else if (Objects.equals(line.substring(0, 2), "DB") && !actorInfo.equals("")) {
                 String birthInfo = line.substring(4);
 
-                Matcher matcher = Pattern.compile("[^(](.*?\\d{4}), ([^\\[(\\n]*)").matcher(birthInfo);
+                Matcher matcher = Pattern.compile("(\\d{4}), ([^\\[(\\n]*)").matcher(birthInfo);
                 if (!matcher.find()) {
                     return;
                 }
 
                 String birthDate = matcher.group(1);
-                if (birthDate.length() == 4) {
-                    birthDate = "1 January " + birthDate;
-                }
 
                 String birthLocation = matcher.group(2);
 
                 String[] splitLoc = birthLocation.split(",");
 
 
-                writeToStream(formatAsCSV(wrapInQuotes(escapeQuotes(actorInfo)), birthDate, wrapInQuotes(escapeQuotes(splitLoc[splitLoc.length - 1].trim()))));
+                writeToStream(formatAsCSV(actorInfo, birthDate, wrapInQuotes(escapeQuotes(splitLoc[splitLoc.length - 1].trim()))));
                 actorInfo = "";
             }
         } else if (line.equals("==============")) {
